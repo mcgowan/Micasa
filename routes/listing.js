@@ -11,24 +11,48 @@ exports.index = function (req, res) {
 
         if (e) throw e;
 
-        var calls = [];
-        
+        //var calls = [];
+
         $ = cheerio.load(b);
 
         var result = { items: [] };
 
         $('.content p').each(function (i, e) {
-            result.items.push( { 
+            
+            var item = { 
                 date: $(e).find('.date').html(),
                 name: $(e).find('a:nth-child(2)').html(),
                 price: $(e).find('.price').html(),
                 url: strformat('{0}{1}', URL, $(e).find('a').attr('href')),
                 images: []
-            });
+            };
+
+            result.items.push(item);
+
+
         });
 
-        //console.log($('.content').text());
+//var messageIds = req.params.messageIds.split(',');
+    async.forEach(result.items, function(item, callback) { //The second argument (callback) is the "task callback" for a specific messageId
+        
+        //db.delete('messages', messageId, callback); //When the db has deleted the item it will call the "task callback". This way async knows which items in the collection have finished
+
+        var s = request(item.url, function (e, r, b) {
+
+            console.log(b);
+
+            callback();
+        });
+
+
+    }, function(err) {
+        if (err) return next(err);
         res.json(200, result);
+    });
+
+
+        //console.log($('.content').text());
+        //res.json(200, result);
 
     });
 
