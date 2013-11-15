@@ -1,0 +1,3 @@
+Creating afternoon-mesa-1985... done, stack is cedar
+http://afternoon-mesa-1985.herokuapp.com/ | git@heroku.com:afternoon-mesa-1985.git
+Git remote heroku added
