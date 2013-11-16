@@ -10,15 +10,8 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 app.use(app.router);
 
-
-//app.use(express.static(path.join(__dirname, 'public')));
 app.use("/js", express.static(__dirname + '/site/js'));
-
-// development only
-// if ('development' == app.get('env')) {
-//     app.use(express.errorHandler());
-// }
-
+app.use("/assets", express.static(__dirname + '/site/assets'));
 
 app.get('/', site.index);
 app.get('/site', site.index);
