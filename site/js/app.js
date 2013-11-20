@@ -1,0 +1,1 @@
+var micasaApp = angular.module('micasaApp', []);
