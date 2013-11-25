@@ -51,12 +51,13 @@ micasaApp.controller('listingsController', function listingsController($scope, $
     }
 
     $scope.save = function () {
-    	$cookies.criteria = angular.toJson($scope.criteria);
+        localStorage["criteria"] = angular.toJson($scope.criteria);
     }
 
     $scope.restore = function () {
-    	$scope.criteria = angular.fromJson($cookies.criteria);
-    	if (!$scope.criteria) {
+        $scope.criteria = angular.fromJson(localStorage["criteria"]);
+    	
+        if (!$scope.criteria) {
 		    $scope.criteria = {
 		        keyword: '',
 		        min: 1000,
