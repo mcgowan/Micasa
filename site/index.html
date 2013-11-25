@@ -9,7 +9,8 @@
     <link href="css/app.css" rel="stylesheet">
 </head>
 <body ng-controller="listingsController">
-    <nav class="navbar navbar-default" role="navigation">
+    
+    <nav class="navbar navbar-fixed-top" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
@@ -31,17 +32,46 @@
                 </div>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Favourites</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-wrench"></span>Settings</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;Favourites</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#settings"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Settings</a></li>
             </ul>
         </div>
     </nav>
-    <div class="contents">
+
+    <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="modalLabel">Settings</h4>
+          </div>
+          
+          <div class="modal-body">
+            <form role="form">
+              <div class="form-group">
+                <label>Minimum Price</label>
+                <input class="form-control" type="text" placeholder="Minimum Price" ng-model="criteria.min" >
+              </div>
+              <div class="form-group">
+                <label>Maximum Price</label>
+                <input class="form-control" type="text" placeholder="Maximum Price" ng-model="criteria.max" >
+              </div>
+            </form>          
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contents" doc-scroll="next()">
         <ul class="list-inline">
             <li ng-repeat="listing in listings">
                 <div class="thumbnail" ng-class="{{listing}}">
                     <div class="thumbnail-item" ng-mouseenter="hover(listing)" ng-mouseleave="hover(listing)">
-                        <img class="img-responsive" ng-src="{{listing.currentImage}}" ng-click="open(listing)">
+                        <img class="img-responsive" ng-src="{{listing.currentImage}}" ng-click="open(listing)" imageonload="loaded(listing)" />
                         <!--
                         <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;Add</button>
 	                    -->
@@ -54,6 +84,7 @@
                         <div class="thumbnail-item-chevron thumbnail-item-chevron-right" ng-show="listing.showPager" ng-click="pageRight(listing)">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </div>
+                        <div class="thumbnail-item-loading" ng-show="listing.loading"></div>
                     </div>
                 </div>
             </li>
@@ -62,6 +93,7 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="lib/underscore.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-cookies.js"></script>
     <script src="lib/bootstrap.min.js"></script>
     <script src="lib/utils.js"></script>
     <script src="js/app.js"></script>
