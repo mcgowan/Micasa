@@ -1,4 +1,4 @@
-var micasaApp = angular.module('micasaApp', ['ngCookies'])
+var micasaApp = angular.module('micasaApp', ['ui.bootstrap'])
     .value('api', 'http://127.0.0.1:3000')
 .factory('listingsService', function ($http, $log, api) {
     return {
@@ -21,20 +21,28 @@ var micasaApp = angular.module('micasaApp', ['ngCookies'])
 				});
         }
     };
-}).directive('docScroll', function() {
+}).directive('onDocScroll', function() {
     return function(scope, element, attrs) {
     	$(window).scroll(function(){
             if ($(window).scrollTop() >= ($(document).height() - ($(window).height() * 2))) {
-                scope.$apply(attrs.docScroll);
+                scope.$apply(attrs.onDocScroll);
             }
     	});
     };
-}).directive('imageonload', function() {
+}).directive('onImageLoad', function() {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
             element.bind('load', function() {
-                scope.$apply(attrs.imageonload);
+                scope.$apply(attrs.onImageLoad);
+            });
+        }
+    };
+}).directive('focusMe', function ($timeout) {
+    return {
+        link: function (scope, element, attrs, model) {
+            $timeout(function () {
+                element[0].focus();
             });
         }
     };

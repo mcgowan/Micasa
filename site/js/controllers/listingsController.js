@@ -1,32 +1,32 @@
-micasaApp.controller('listingsController', function listingsController($scope, $cookies, listingsService) {
+micasaApp.controller('listingsController', function listingsController($scope, listingsService) {
 
     $scope.getListings = function () {
-            
-        if (!$scope.data.fetching && !$scope.data.done) {
+
+        if (!$scope.data.fetching && !$scope.data.nomore) {
 
             $scope.data.fetching = true;
-            
+
             listingsService.getListings($scope.data.start, $scope.criteria, function (data) {
 
                 $scope.data.fetching = false;
 
                 if (data.listings.length === 0) {
-                    $scope.data.done = true;
+                    $scope.data.nomore = true;
 
                 } else {
                     _.each(data.listings, function (listing) {
-                        
-                        listing.loading = true;
+
+                        listing.busy = true;
 
                         listingsService.getListing(listing.id, function (data) {
                             if (data.images.length !== 0) {
                                 $scope.listings.push(listing);
-                                
+
                                 listing.url = data.url;
                                 listing.images = data.images;
                                 listing.currentImage = listing.images[0];
                                 listing.currentImageIndex = 0;
-                                
+
                                 showPager = false;
                             }
                         });
@@ -41,7 +41,7 @@ micasaApp.controller('listingsController', function listingsController($scope, $
     $scope.search = function () {
         $scope.save();
         $scope.data.start = 0;
-        $scope.data.done = false;
+        $scope.data.nomore = false;
         $scope.listings = [];
         $scope.getListings();
     };
@@ -56,25 +56,24 @@ micasaApp.controller('listingsController', function listingsController($scope, $
 
     $scope.restore = function () {
         $scope.criteria = angular.fromJson(localStorage["criteria"]);
-    	
+
         if (!$scope.criteria) {
-		    $scope.criteria = {
-		        keyword: '',
-		        min: 1000,
-		        max: 3000,
-		    };
+            $scope.criteria = {
+                keyword: '',
+                min: 1000,
+                max: 3000,
+            };
         }
         $scope.data = {};
     }
 
     $scope.loaded = function (listing) {
-        console.log('$scope.loaded');
-        listing.loading = false;
-    }   
+        listing.busy = false;
+    }
 
     $scope.open = function (listing) {
         window.open(listing.url);
-    }	
+    }
 
     $scope.hover = function (listing) {
         if (listing.images && listing.images.length > 1)

@@ -35,7 +35,6 @@
 
 .thumbnail-item {
     background: #d0d0d0;
-    /*background-image:url('img/ajax-loader.gif');*/
     border-radius: 2px;
     position: relative;
     z-index: 1;
@@ -43,8 +42,6 @@
 }
 
     .thumbnail-item img {
-            
-
         width: 270px;
         height: 190px;
         max-width: 270px;
@@ -62,15 +59,14 @@
         font-family: Verdana, Geneva, sans-serif;
     }
 
-    .thumbnail-item-loading {
-        position: absolute;
-        top:70px;
-        left:124px;
-        width:32px;
-        height:32px;
-        background-image:url('../img/ajax-loader.gif');
-    }
-
+.thumbnail-item-loading {
+    position: absolute;
+    top: 70px;
+    left: 124px;
+    width: 32px;
+    height: 32px;
+    background-image: url('../img/ajax-loader.gif');
+}
 
 .thumbnail-item-chevron {
     position: absolute;
