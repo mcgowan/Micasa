@@ -1,4 +1,21 @@
-micasaApp.controller('listingsController', function listingsController($scope, listingsService) {
+var listingsController = micasaApp.controller('listingsController', function listingsController($scope, $modal, $log, listingsService) {
+
+    $scope.openSettings = function () {
+
+        var modalInstance = $modal.open({
+            templateUrl: 'partials/settings.html',
+            controller: 'settingsController',
+            resolve: {
+                range: function () {
+                    return $scope.criteria.range;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (range) {
+            $scope.criteria.range = range;
+        });
+    };
 
     $scope.getListings = function () {
 
@@ -60,8 +77,7 @@ micasaApp.controller('listingsController', function listingsController($scope, l
         if (!$scope.criteria) {
             $scope.criteria = {
                 keyword: '',
-                min: 1000,
-                max: 3000,
+                range: { min: 1000, max: 3000 }
             };
         }
         $scope.data = {};

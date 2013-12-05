@@ -15,6 +15,7 @@ app.use("/fonts", express.static(__dirname + '/site/fonts'));
 app.use("/img", express.static(__dirname + '/site/img'));
 app.use("/js", express.static(__dirname + '/site/js'));
 app.use("/lib", express.static(__dirname + '/site/lib'));
+app.use("/partials", express.static(__dirname + '/site/partials'));
 
 app.get('/', site.index);
 app.get('/site', site.index);

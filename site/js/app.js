@@ -3,7 +3,7 @@ var micasaApp = angular.module('micasaApp', ['ui.bootstrap'])
 .factory('listingsService', function ($http, $log, api) {
     return {
         getListings: function (start, criteria, callback) {
-            $http({ method: 'GET', url: '{0}/list?start={1}&query={2}&min={3}&max={4}'.format(api, start, criteria.keyword, criteria.min, criteria.max) }).
+            $http({ method: 'GET', url: '{0}/list?start={1}&query={2}&min={3}&max={4}'.format(api, start, criteria.keyword, criteria.range.min, criteria.range.max) }).
 				success(function (data, status, headers, config) {
 				    callback(data);
 				}).
@@ -21,26 +21,26 @@ var micasaApp = angular.module('micasaApp', ['ui.bootstrap'])
 				});
         }
     };
-}).directive('onDocScroll', function() {
+}).directive('myScrolling', function() {
     return function(scope, element, attrs) {
     	$(window).scroll(function(){
             if ($(window).scrollTop() >= ($(document).height() - ($(window).height() * 2))) {
-                scope.$apply(attrs.onDocScroll);
+                scope.$apply(attrs.myScrolling);
             }
     	});
     };
-}).directive('onImageLoad', function() {
+}).directive('myLoaded', function() {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
             element.bind('load', function() {
-                scope.$apply(attrs.onImageLoad);
+                scope.$apply(attrs.myLoaded);
             });
         }
     };
-}).directive('focusMe', function ($timeout) {
+}).directive('myFocus', function ($timeout) {
     return {
-        link: function (scope, element, attrs, model) {
+        link: function (scope, element, attrs) {
             $timeout(function () {
                 element[0].focus();
             });

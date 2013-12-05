@@ -1,0 +1,22 @@
+﻿<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title" id="modalLabel">Settings</h4>
+    </div>
+    <form role="form">
+        <div class="modal-body">	
+            <div class="form-group">
+                <label>Minimum Price</label>
+                <input class="form-control" type="text" placeholder="Minimum Price" ng-model="range.min" my-focus>
+            </div>
+            <div class="form-group">
+                <label>Maximum Price</label>
+                <input class="form-control" type="text" placeholder="Maximum Price" ng-model="range.max">
+            </div>
+        </div>
+		<div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>
